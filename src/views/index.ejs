@@ -1,0 +1,29 @@
+<html>
+<head>
+
+</head>
+<body>
+Hello from html
+
+<form id="createPlayerForm" onsubmit="sendForm(event)">
+    <input type="text" name="pseudo" />
+
+    <button>Créer une partie</button>
+</form>
+
+<script>
+    console.log("ok");
+
+    function sendForm(e){
+      e.preventDefault();
+      // TODO send POST ajax
+      fetch("/game", {
+        method: "POST",
+        body: {
+          pseudo: "coucou"
+        }
+      })
+    }
+</script>
+</body>
+</html>
