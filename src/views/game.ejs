@@ -1,0 +1,99 @@
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000;
+            padding: 0;
+            margin: 0;
+            font-family: 'Wix Madefor Display', sans-serif;
+        }
+
+        .board {
+            background-color: #1e3a73;
+            position: relative;
+        }
+
+        .position {
+            position: absolute;
+            background-color: #048dc9;
+            box-shadow: inset 0 0 0 1px #5db1d6;
+        }
+
+        .x2 {
+            background-color: #34a6d5;
+        }
+
+        .x3 {
+            background-color: #429b8c;
+        }
+
+        .replay {
+            background-color: #744f9b;
+        }
+
+        .start {
+            background-color: #f2c40f;
+        }
+
+        .special {
+            font-size: 2.5em;
+            color: white;
+            text-align: center;
+        }
+
+        .pawn {
+            background-color: #d3ae7d;
+            border-radius: 10px;
+            width: 80%;
+            height: 80%;
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            font-size: 2em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="board">
+
+</div>
+
+<script>
+  const boardData = JSON.parse('<%- JSON.stringify(board) %>');
+
+  function createBoard(boardData) {
+    const board = document.querySelector(".board");
+    const size = Math.round(window.innerWidth / 18);
+    for (let y = 0; y < boardData.height + 1; y++) {
+      for (let x = 0; x < boardData.width + 1; x++) {
+        const position = document.createElement("div");
+        position.classList.add("position");
+        position.id = `position_${x}-${y}`;
+        position.style.top = `${y * size}px`;
+        position.style.left = `${x * size}px`;
+        position.style.width = `${size}px`;
+        position.style.height = `${size}px`;
+        board.appendChild(position);
+      }
+    }
+
+    // special positions
+    boardData.specials.forEach(item => {
+      const position = document.querySelector(`#position_${item.x}-${item.y}`);
+      position.classList.add("special");
+      position.classList.add(item.type);
+      if (item.text) {
+        position.innerText = item.text;
+        position.style.lineHeight = `${size}px`;
+      }
+    });
+  }
+
+  createBoard(boardData);
+</script>
+</body>
+</html>
